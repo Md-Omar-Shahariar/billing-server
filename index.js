@@ -18,8 +18,14 @@ async function run() {
 
     const taskCollection = client.db("user").collection("bill");
 
-    app.get("/billing-list", (req, res) => {
-      res.send("hello");
+    app.get("/billing-list", async (req, res) => {
+      const result = await taskCollection.find().toArray();
+      res.send(result);
+    });
+    app.post("/billing-list", async (req, res) => {
+      console.log(req.body);
+      const result = await taskCollection.insertOne(req.body);
+      res.send(result);
     });
   } finally {
   }
